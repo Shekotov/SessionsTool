@@ -6,6 +6,8 @@ public class Session {
     private Date startDate;
     private Date endDate;
     private SessionType type;
+    private int startTimeOffset = 0;
+    private int endTimeOffset = 0;
 
     public Session(Date startDate, Date endDate, SessionType type) {
         this.startDate = startDate;
@@ -41,12 +43,30 @@ public class Session {
         this.type = type;
     }
 
+    public int getStartTimeOffset() {
+        return startTimeOffset;
+    }
+
+    public void setStartTimeOffset(int startTimeOffset) {
+        this.startTimeOffset = startTimeOffset;
+    }
+
+    public int getEndTimeOffset() {
+        return endTimeOffset;
+    }
+
+    public void setEndTimeOffset(int endTimeOffset) {
+        this.endTimeOffset = endTimeOffset;
+    }
+
     @Override
     public String toString() {
         return "Session{" +
                 "startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", type=" + type +
+                ", startTimeOffset=" + startTimeOffset +
+                ", endTimeOffset=" + endTimeOffset +
                 '}';
     }
 }

@@ -99,7 +99,7 @@ public class LongRange {
 
     @Override
     public String toString() {
-        return "ru.tigerframework.sessionstool.LongRange{" +
+        return "LongRange{" +
                 "start=" + start +
                 ", end=" + end +
                 '}';

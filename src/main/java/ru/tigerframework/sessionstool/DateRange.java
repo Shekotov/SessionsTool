@@ -63,7 +63,7 @@ public class DateRange {
 
     @Override
     public String toString() {
-        return "ru.tigerframework.sessionstool.DateRange{" +
+        return "DateRange{" +
                 "start=" + start +
                 ", end=" + end +
                 '}';

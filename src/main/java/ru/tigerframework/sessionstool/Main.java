@@ -1,23 +1,36 @@
 package ru.tigerframework.sessionstool;
 
 import java.time.*;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
         HolidaySessionCreator creator = new HolidaySessionCreator();
 
-        LocalDate startDate = LocalDate.of(2022, 1, 29);
-        LocalTime startTime = LocalTime.of(0, 0);
-        LocalDate endDate = LocalDate.of(2022, 1, 30);
-        LocalTime endTime = LocalTime.of(22, 30);
+        String holidayStart = "2022-01-28T01:00";
+        String holidayEnd   = "2022-01-31T00:00";
         ZoneId zoneId = ZoneId.systemDefault();
 
-        List<Session> sessions = creator.create(ZonedDateTime.of(startDate, startTime, zoneId),
-                                                ZonedDateTime.of(endDate, endTime, zoneId));
+        List<Session> tradeSessions = new ArrayList<>();
+        tradeSessions.add(createSession("2022-01-27T23:00", "2022-01-28T10:02", zoneId, SessionType.NIGHT1));
+        tradeSessions.add(createSession("2022-01-28T10:02", "2022-01-28T19:30", zoneId, SessionType.DAY));
+        tradeSessions.add(createSession("2022-01-28T19:30", "2022-01-28T23:00", zoneId, SessionType.NIGHT2));
+        tradeSessions.add(createSession("2022-01-30T23:00", "2022-01-31T10:02", zoneId, SessionType.NIGHT1));
 
-        for (Session session : sessions) {
+        List<Session> holidaySessions = creator.create(tradeSessions, ZonedDateTime.of(LocalDateTime.parse(holidayStart), zoneId),
+                                                                      ZonedDateTime.of(LocalDateTime.parse(holidayEnd), zoneId));
+
+        for (Session session : holidaySessions) {
             System.out.println(session);
         }
+    }
+
+    public static Session createSession(String sessionStart, String sessionEnd,
+                                        ZoneId zoneId, SessionType sessionType) {
+        return new Session(Date.from(ZonedDateTime.of(LocalDateTime.parse(sessionStart), zoneId).toInstant()),
+                           Date.from(ZonedDateTime.of(LocalDateTime.parse(sessionEnd), zoneId).toInstant()),
+                           sessionType);
     }
 }

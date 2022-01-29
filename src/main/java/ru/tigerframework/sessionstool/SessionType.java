@@ -1,36 +1,37 @@
 package ru.tigerframework.sessionstool;
 
 public enum SessionType {
-    NIGHT1,
-    DAY,
-    NIGHT2,
-    NIGHT1_HOLIDAY,
+    // holidays
     DAY_HOLIDAY,
+    NIGHT1_HOLIDAY,
     NIGHT2_HOLIDAY,
+
+    // regular hours
+    DAY,
+    NIGHT1,
+    NIGHT2,
     ;
 
-    public boolean isNight1() {
-        return this == NIGHT1 ||
-               this == NIGHT1_HOLIDAY;
+    public static SessionType parseOrNull(String value) {
+        try {
+            return valueOf(value);
+        } catch (IllegalArgumentException e) {
+            // ignore
+        }
+
+        return null;
     }
 
-    public boolean isDay() {
-        return this == DAY ||
-               this == DAY_HOLIDAY;
+    public static SessionType parseOrException(String value) {
+        return valueOf(value);
     }
 
-    public boolean isNight2() {
-        return this == NIGHT2 ||
-               this == NIGHT2_HOLIDAY;
-    }
-
-    public boolean isHoliday() {
-        return this == NIGHT1_HOLIDAY ||
-               this == DAY_HOLIDAY ||
-               this == NIGHT2_HOLIDAY;
-    }
-
-    public boolean isNotHoliday() {
-        return !isHoliday();
+    public SessionType toHoliday() {
+        switch (this) {
+            case NIGHT1: return NIGHT1_HOLIDAY;
+            case DAY:    return DAY_HOLIDAY;
+            case NIGHT2: return NIGHT2_HOLIDAY;
+            default:     throw new IllegalStateException();
+        }
     }
 }
